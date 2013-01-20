@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+    
+        <service id="crawler" class="Symfony\Component\DomCrawler\Crawler"/>
+        
+        <service id="eriktrapman_cqparser.parser" class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\CQParser"/>
+        
+        <service id="eriktrapman_cqparser.crawler_manager" class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Crawler\CrawlerManager">
+            <argument type="service" id="crawler"/>
+        </service>
+        
+        <service id="eriktrapman_cqparser.type.strategy_selector" class="ErikTrapman\Bundle\CQRankingParserBundle\Form\Type\StrategySelectorType">
+            <tag name="form.type" alias="eriktrapman_cqparser_strategy" />
+        </service>
+        
+    </services>
+</container>
