@@ -17,5 +17,20 @@
             <tag name="form.type" alias="eriktrapman_cqparser_strategy" />
         </service>
         
+        <service id="eriktrapman_cqparser.type.match_selector" 
+                 class="ErikTrapman\Bundle\CQRankingParserBundle\Form\Type\MatchSelectorType">
+            <tag name="form.type" alias="eriktrapman_cqrankingmatchselector_type" />
+            <argument id="eriktrapman_cqparser.matchparser" type="service"/>
+        </service>
+        
+        <!-- TODO inject xml through yaml-config -->
+        <service 
+            id="eriktrapman_cqparser.matchparser" 
+            class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser">
+            <argument type="service" id="eriktrapman_cqparser.crawler_manager"/>
+            <argument>http://cqranking.com/men/xml/RSS_RecentRacesBasic.xml</argument>
+        </service>
+        
+        
     </services>
 </container>

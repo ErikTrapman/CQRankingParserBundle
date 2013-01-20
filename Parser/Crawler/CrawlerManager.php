@@ -7,9 +7,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlerManager
 {
-
     private $crawler;
-    
+
     public function __construct(Crawler $crawler)
     {
         $this->crawler = $crawler;
@@ -17,11 +16,27 @@ class CrawlerManager
 
     public function getCrawler($url)
     {
-        $siteContent = file_get_contents($url);
-        if ($siteContent === false) {
-            throw new CQParserException('Unable to get content from ' . $url);
-        }
-        $this->crawler->addContent($siteContent, 'text/html');
+        $this->crawler->addContent($this->getContent($url), 'text/html');
         return $this->crawler;
+    }
+
+    /**
+     * 
+     * @param type $url
+     * @return Crawler Description
+     */
+    public function getCrawlerForMatchSelector($url)
+    {
+        $this->crawler->addXmlContent($this->getContent($url));
+        return $this->crawler;
+    }
+
+    private function getContent($feed)
+    {
+        $content = file_get_contents($feed);
+        if ($content === false) {
+            throw new CQParserException('Unable to get content from '.$feed);
+        }
+        return $content;
     }
 }
