@@ -1,4 +1,4 @@
 CQRankingParserBundle
 =====================
 
-Parse results from CQRanking.com
+Parse results from CQRanking.com.
