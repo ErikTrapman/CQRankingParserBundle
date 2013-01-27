@@ -13,6 +13,10 @@ class GeneralClassification extends AbstractStrategy implements ParserStrategyIn
     {
         // It's january 2013 now, so only some GC's from a 2.2...
         // not sure if GC's from 2.1 or higher will have the same HTML structure
-        return $this->parseResultsFromExpression($crawler, 'table.border tr');
+        $res = $this->parseResultsFromExpression($crawler, 'table.border tr');
+        if(!empty($res)){
+            return $res;
+        }
+        return $this->parseResultsFromExpression($crawler, 'table.bordertop tr');
     }
 }
