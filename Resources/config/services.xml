@@ -9,6 +9,8 @@
         
         <service id="eriktrapman_cqparser.parser" class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\CQParser"/>
         
+        <service id="eriktrapman_cqparser.nationality_resolver" class="ErikTrapman\Bundle\CQRankingParserBundle\Nationality\NationalityResolver"/>
+        
         <service id="eriktrapman_cqparser.crawler_manager" class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Crawler\CrawlerManager">
             <argument type="service" id="crawler"/>
         </service>
