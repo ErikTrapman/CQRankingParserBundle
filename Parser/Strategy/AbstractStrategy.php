@@ -32,12 +32,15 @@ abstract class AbstractStrategy implements ParserStrategyInterface
             if ($tdIndex == 1) {
                 $returnValues[$trIndex]['pos'] = trim($currentResult->nodeValue, '.');
             }
-            if($tdIndex == 3){
+            if ($tdIndex == 3) {
                 $img = $currentResult->getElementsByTagName("img");
-                $gif = $img->item(0)->getAttribute('src');
-                $parts = explode(".",basename($gif));
-                $returnValues[$trIndex]['nat'] = $parts[0];
-                
+                if ($img->length) {
+                    $gif = $img->item(0)->getAttribute('src');
+                    $parts = explode(".", basename($gif));
+                    $returnValues[$trIndex]['nat'] = $parts[0];
+                } else {
+                    $returnValues[$trIndex]['nat'] = null;
+                }
             }
             if ($tdIndex == 5) {
                 $returnValues[$trIndex]['name'] = $currentResult->nodeValue;
