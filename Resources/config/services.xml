@@ -25,7 +25,7 @@
             <argument id="eriktrapman_cqparser.matchparser" type="service"/>
         </service>
         
-        <!-- TODO inject xml through yaml-config -->
+        <!-- TODO inject argument through parameters.yml -->
         <service 
             id="eriktrapman_cqparser.matchparser" 
             class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser">
