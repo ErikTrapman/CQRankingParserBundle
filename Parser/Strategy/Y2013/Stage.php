@@ -15,6 +15,10 @@ class Stage extends AbstractStrategy implements ParserStrategyInterface
         if (!empty($res)) {
             return $res;
         }
-        return $this->parseResultsFromExpression($crawler, 'table.bordertop tr');
+        
+        $top = $this->parseResultsFromExpression($crawler, 'table.bordertop tr');
+        $sides = $this->parseResultsFromExpression($crawler, 'table.bordersides tr');
+        $bottom = $this->parseResultsFromExpression($crawler, 'table.borderbottom tr');
+        return array_merge($top, $sides, $bottom);
     }
 }

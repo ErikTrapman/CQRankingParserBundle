@@ -8,17 +8,6 @@ use ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\ParserStrategyInter
 
 class CQParser
 {
-    /**
-     * 
-     * @var Symfony\Component\DomCrawler\Crawler
-     */
-    private $crawler;
-
-    /**
-     * Url
-     * @var unknown_type
-     */
-    private $url;
 
     /**
      *
@@ -39,7 +28,7 @@ class CQParser
         $values = $headers->extract(array('_text', 'b'));
         $name = @$values[0][0];
         if ($name === false) {
-            return 'Naam kon niet worden opgehaald. Vul zelf in via '.$this->url;
+            return 'Naam kon niet worden opgehaald. Vul zelf in.';
         }
         return trim($name);
     }
