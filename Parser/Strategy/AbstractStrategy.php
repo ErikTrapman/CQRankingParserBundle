@@ -24,41 +24,41 @@ abstract class AbstractStrategy implements ParserStrategyInterface
      */
     protected function parseResultsFromExpression(Crawler $crawler, $expr)
     {
-        $resultrows = $crawler->filter($expr)->filter('td');
-        $returnValues = array();
-        $trIndex = 0;
-        $tdIndex = 0;
-        foreach ($resultrows as $currentResult) {
-            if ($tdIndex == 1) {
-                $returnValues[$trIndex]['pos'] = trim($currentResult->nodeValue, '.');
-            }
-            if ($tdIndex == 3) {
-                $img = $currentResult->getElementsByTagName("img");
-                if ($img->length) {
-                    $gif = $img->item(0)->getAttribute('src');
-                    $parts = explode(".", basename($gif));
-                    $returnValues[$trIndex]['nat'] = $parts[0];
-                } else {
-                    $returnValues[$trIndex]['nat'] = null;
-                }
-            }
-            if ($tdIndex == 5) {
-                $returnValues[$trIndex]['name'] = $currentResult->nodeValue;
-                $hyperlink = $currentResult->getElementsByTagName('a');
-                $riderHref = $hyperlink->item(0)->getAttribute('href');
+        $data = $crawler->filter($expr)->filter('tr')->each(function($node, $i) {
+                $returnValues = array();
+                foreach ($node->getElementsByTagName('td') as $key => $currentResult) {
+                    if ($key == 1) {
+                        $pos = trim($currentResult->nodeValue, '.');
+                        if (0 !== strcmp('leader', $pos) && !is_numeric($pos)) {
+                            break;
+                        }
+                        $returnValues['pos'] = $pos;
+                    }
+                    if ($key == 3) {
+                        $img = $currentResult->getElementsByTagName("img");
+                        if ($img->length) {
+                            $gif = $img->item(0)->getAttribute('src');
+                            $parts = explode(".", basename($gif));
+                            $returnValues['nat'] = $parts[0];
+                        } else {
+                            $returnValues['nat'] = null;
+                        }
+                    }
+                    if ($key == 5) {
+                        $returnValues['name'] = $currentResult->nodeValue;
+                        $hyperlink = $currentResult->getElementsByTagName('a');
+                        $riderHref = $hyperlink->item(0)->getAttribute('href');
 
-                $riderId = substr($riderHref, strpos($riderHref, '=') + 1);
-                $returnValues[$trIndex]['cqranking_id'] = $riderId;
-            }
-            if ($tdIndex == 11) {
-                $returnValues[$trIndex]['points'] = $currentResult->nodeValue;
-            }
-            $tdIndex++;
-            if ($tdIndex == 13) {
-                $tdIndex = 0;
-                $trIndex++;
-            }
-        }
-        return $returnValues;
+                        $riderId = substr($riderHref, strpos($riderHref, '=') + 1);
+                        $returnValues['cqranking_id'] = $riderId;
+                    }
+                    if ($key == 11) {
+                        $returnValues['points'] = $currentResult->nodeValue;
+                    }
+                }
+                return $returnValues;
+            });
+            //array_values to generate new keys, starting from 0
+        return array_values(array_filter($data, create_function('$a', 'return !empty($a);')));
     }
 }
