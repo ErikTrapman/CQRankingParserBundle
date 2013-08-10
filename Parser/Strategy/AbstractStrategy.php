@@ -26,7 +26,7 @@ abstract class AbstractStrategy implements ParserStrategyInterface
     {
         $data = $crawler->filter($expr)->filter('tr')->each(function($node, $i) {
                 $returnValues = array();
-                foreach ($node->getElementsByTagName('td') as $key => $currentResult) {
+                foreach ($node->filter('td') as $key => $currentResult) {
                     if ($key == 1) {
                         $pos = trim($currentResult->nodeValue, '.');
                         if (0 !== strcmp('leader', $pos) && !is_numeric($pos)) {
