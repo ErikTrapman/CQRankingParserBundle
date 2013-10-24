@@ -27,7 +27,7 @@ class CrawlerManager
      */
     public function getCrawlerForMatchSelector($url)
     {
-        $this->crawler->addXmlContent($this->getContent($url));
+        $this->crawler->addHtmlContent($this->getContent($url));
         return $this->crawler;
     }
 

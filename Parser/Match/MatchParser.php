@@ -10,6 +10,10 @@ class MatchParser
 
     private $matchesFeed;
 
+    /**
+     * @param CrawlerManager $crawlermanager
+     * @param $matchesFeed
+     */
     public function __construct(CrawlerManager $crawlermanager, $matchesFeed)
     {
         $this->crawlerManager = $crawlermanager;
@@ -17,24 +21,34 @@ class MatchParser
     }
 
     /**
-     * 
+     *
      */
     public function getMatches()
     {
         $ret = array();
         $crawler = $this->crawlerManager->getCrawlerForMatchSelector($this->matchesFeed);
-        $results = $crawler->filterXPath('//item');
-        foreach ($results as $result) {
-            $link = $result->getElementsByTagName('link');
-            if (!$link->length) {
-                continue;
+
+        $crawler->filter('table.border tr')->each(function ($node, $i) use (&$ret) {
+            $date = $cat = $a = $name = null;
+            if (0 === $i) {
+                return;
             }
-            $titleItem = $result->getElementsByTagName('title');
-            $title = ( $titleItem->length ) ? $titleItem->item(0)->nodeValue : 'Onbekend';
-            $dateItem = $result->getElementsByTagName('pubDate');
-            $date = ( $dateItem->length ) ? $dateItem->item(0)->nodeValue : '';
-            $ret[$link->item(0)->nodeValue] = sprintf("%s [%s]",$title,$date);
-        }
+            foreach ($node->filter('td') as $index => $td) {
+                if (1 === $index) {
+                    $date = $td->nodeValue;
+                }
+                if (3 === $index) {
+                    $cat = $td->nodeValue;
+                }
+                if (7 === $index) {
+                    $aEl = $td->getElementsByTagName('a')->item(0);
+                    $a = 'http://cqranking.com/men/asp/gen/' . $aEl->getAttribute('href');
+                    $name = $aEl->nodeValue;
+                }
+            }
+            $ret[$a] = sprintf('[%s] %s - %s', $date, $cat, $name);
+
+        });
         return $ret;
     }
 }

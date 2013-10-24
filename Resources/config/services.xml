@@ -30,7 +30,7 @@
             id="eriktrapman_cqparser.matchparser" 
             class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser">
             <argument type="service" id="eriktrapman_cqparser.crawler_manager"/>
-            <argument>http://cqranking.com/men/xml/RSS_RecentRacesBasic.xml</argument>
+            <argument>http://cqranking.com/men/asp/gen/RacesRecent.asp?changed=0</argument>
         </service>
         
         
