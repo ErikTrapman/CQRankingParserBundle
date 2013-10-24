@@ -26,6 +26,7 @@ class MatchParser
     public function getMatches()
     {
         $ret = array();
+        // TODO refactor this to make it more testeable. e,g, the possibility to feed it with static content.
         $crawler = $this->crawlerManager->getCrawlerForMatchSelector($this->matchesFeed);
 
         $crawler->filter('table.border tr')->each(function ($node, $i) use (&$ret) {
