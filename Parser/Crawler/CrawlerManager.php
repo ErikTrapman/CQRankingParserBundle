@@ -30,21 +30,20 @@ class CrawlerManager
     }
 
     /**
-     * 
+     *
      * @param type $url
      * @return Crawler Description
      */
     public function getCrawlerForMatchSelector($url)
     {
-        $this->crawler->addHtmlContent($this->getContent($url));
-        return $this->crawler;
+        return $this->getCrawler($url);
     }
 
     private function getContent($feed)
     {
         $content = file_get_contents($feed);
         if ($content === false) {
-            throw new CQParserException('Unable to get content from '.$feed);
+            throw new CQParserException('Unable to get content from ' . $feed);
         }
         return $content;
     }

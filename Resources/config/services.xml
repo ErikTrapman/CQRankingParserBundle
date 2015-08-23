@@ -25,12 +25,20 @@
             <argument id="eriktrapman_cqparser.matchparser" type="service"/>
         </service>
         
-        <!-- TODO inject argument through parameters.yml -->
+        <!-- TODO inject url-argument through parameters.yml -->
         <service 
             id="eriktrapman_cqparser.matchparser" 
             class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser">
             <argument type="service" id="eriktrapman_cqparser.crawler_manager"/>
             <argument>http://cqranking.com/men/asp/gen/RacesRecent.asp?changed=0</argument>
+        </service>
+
+        <!-- TODO inject url-argument through parameters.yml -->
+        <service
+            id="eriktrapman_cqparser.twitterparser"
+            class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Twitter\TwitterParser">
+            <argument type="service" id="eriktrapman_cqparser.crawler_manager"/>
+            <argument>http://cqranking.com/men/asp/gen/rider.asp?riderid=</argument>
         </service>
         
         
