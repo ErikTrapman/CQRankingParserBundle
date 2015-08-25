@@ -23,14 +23,14 @@ class StageTest extends StrategyTest
         $strategy = new Stage();
         $results = $strategy->parseResults($this->getCrawler($url));
 
-        $this->assertEquals(181, count($results));
+        $this->assertEquals(179, count($results));
 
         $leader = $results[0];
         $this->assertEquals(array('leader', 1994, 18), array($leader['pos'], $leader['cqranking_id'], $leader['points']));
         $first = $results[1];
         $this->assertEquals(array(1, 1992, 70), array($first['pos'], $first['cqranking_id'], $first['points']));
-        $last = $results[180];
-        $this->assertEquals(array(180, 13228, 0), array($last['pos'], $last['cqranking_id'], $last['points']));
+        $last = $results[178];
+        $this->assertEquals(array(178, 13228, 0), array($last['pos'], $last['cqranking_id'], $last['points']));
     }
 
     public function testResultsFrom2HCParseCorrect()
