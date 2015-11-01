@@ -4,43 +4,52 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-    
+
         <service id="crawler" class="Symfony\Component\DomCrawler\Crawler"/>
-        
+
         <service id="eriktrapman_cqparser.parser" class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\CQParser"/>
-        
-        <service id="eriktrapman_cqparser.nationality_resolver" class="ErikTrapman\Bundle\CQRankingParserBundle\Nationality\NationalityResolver"/>
-        
-        <service id="eriktrapman_cqparser.crawler_manager" class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Crawler\CrawlerManager">
+
+        <service id="eriktrapman_cqparser.nationality_resolver"
+                 class="ErikTrapman\Bundle\CQRankingParserBundle\Nationality\NationalityResolver"/>
+
+        <service id="eriktrapman_cqparser.crawler_manager"
+                 class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Crawler\CrawlerManager">
             <argument type="service" id="crawler"/>
         </service>
-        
-        <service id="eriktrapman_cqparser.type.strategy_selector" class="ErikTrapman\Bundle\CQRankingParserBundle\Form\Type\StrategySelectorType">
-            <tag name="form.type" alias="eriktrapman_cqparser_strategy" />
+
+        <service id="eriktrapman_cqparser.type.strategy_selector"
+                 class="ErikTrapman\Bundle\CQRankingParserBundle\Form\Type\StrategySelectorType">
+            <tag name="form.type" alias="eriktrapman_cqparser_strategy"/>
         </service>
-        
-        <service id="eriktrapman_cqparser.type.match_selector" 
+
+        <service id="eriktrapman_cqparser.type.match_selector"
                  class="ErikTrapman\Bundle\CQRankingParserBundle\Form\Type\MatchSelectorType">
-            <tag name="form.type" alias="eriktrapman_cqrankingmatchselector_type" />
+            <tag name="form.type" alias="eriktrapman_cqrankingmatchselector_type"/>
             <argument id="eriktrapman_cqparser.matchparser" type="service"/>
         </service>
-        
+
         <!-- TODO inject url-argument through parameters.yml -->
-        <service 
-            id="eriktrapman_cqparser.matchparser" 
-            class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser">
+        <service
+                id="eriktrapman_cqparser.matchparser"
+                class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser">
             <argument type="service" id="eriktrapman_cqparser.crawler_manager"/>
             <argument>http://cqranking.com/men/asp/gen/RacesRecent.asp?changed=0</argument>
         </service>
 
         <!-- TODO inject url-argument through parameters.yml -->
         <service
-            id="eriktrapman_cqparser.twitterparser"
-            class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Twitter\TwitterParser">
+                id="eriktrapman_cqparser.twitterparser"
+                class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\Twitter\TwitterParser">
             <argument type="service" id="eriktrapman_cqparser.crawler_manager"/>
             <argument>http://cqranking.com/men/asp/gen/rider.asp?riderid=</argument>
         </service>
-        
-        
+
+        <service
+                id="eriktrapman_cqparser.recentracesparser"
+                class="ErikTrapman\Bundle\CQRankingParserBundle\Parser\RecentRaces\RecentRacesParser">
+            <argument type="service" id="eriktrapman_cqparser.crawler_manager"/>
+        </service>
+
+
     </services>
 </container>

@@ -39,6 +39,16 @@ class CrawlerManager
         return $this->getCrawler($url);
     }
 
+    /**
+     * @param $content
+     * @return Crawler
+     */
+    public function getCrawlerForHTMLContent($content)
+    {
+        $this->crawler->addContent($content, 'text/html');
+        return $this->crawler;
+    }
+
     private function getContent($feed)
     {
         $content = file_get_contents($feed);
