@@ -16,15 +16,27 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlerManager
 {
+
+    /**
+     * @var Crawler
+     */
     private $crawler;
 
+    /**
+     * @param Crawler $crawler
+     */
     public function __construct(Crawler $crawler)
     {
         $this->crawler = $crawler;
     }
 
+    /**
+     * @param $url
+     * @return Crawler
+     */
     public function getCrawler($url)
     {
+        $this->crawler->clear();
         $this->crawler->addContent($this->getContent($url), 'text/html');
         return $this->crawler;
     }
@@ -49,6 +61,10 @@ class CrawlerManager
         return $this->crawler;
     }
 
+    /**
+     * @param $feed
+     * @return string
+     */
     private function getContent($feed)
     {
         $content = file_get_contents($feed);
