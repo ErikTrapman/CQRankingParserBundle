@@ -55,13 +55,13 @@ class RecentRacesParser
                     continue;
                 }
                 if (1 == $index) {
-                    $row->date = \DateTime::createFromFormat('d/m', $td->nodeValue);
+                    $row->date = \DateTime::createFromFormat('d/m', trim($td->nodeValue));
                 }
                 if (3 == $index) {
-                    $row->category = $td->nodeValue;
+                    $row->category = trim($td->nodeValue);
                 }
                 if (7 === $index) {
-                    $row->name = $td->nodeValue;
+                    $row->name = trim($td->nodeValue);
                     $aEl = $td->getElementsByTagName('a')->item(0);
                     //$a = 'http://cqranking.com/men/asp/gen/' . ;
                     $row->url = $aEl->getAttribute('href');
@@ -69,6 +69,6 @@ class RecentRacesParser
             }
             $ret[] = $row;
         });
-        return $ret;
+        return array_reverse($ret);
     }
 }
