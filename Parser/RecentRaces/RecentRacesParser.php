@@ -56,6 +56,7 @@ class RecentRacesParser
                 }
                 if (1 == $index) {
                     $row->date = \DateTime::createFromFormat('d/m', trim($td->nodeValue));
+                    $row->date->setTime(0, 0, 0);
                 }
                 if (3 == $index) {
                     $row->category = trim($td->nodeValue);
