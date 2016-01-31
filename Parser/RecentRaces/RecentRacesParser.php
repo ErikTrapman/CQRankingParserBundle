@@ -62,10 +62,6 @@ class RecentRacesParser
                     $row->category = trim($td->nodeValue);
                 }
                 if (7 === $index) {
-                    // we skip Team Time Trials. Just try this...
-                    if (false !== strpos($td->nodeValue, 'T.T.T') || false !== strpos($td->nodeValue, 'TTT')) {
-                        continue;
-                    }
                     $row->name = trim($td->nodeValue);
                     $aEl = $td->getElementsByTagName('a')->item(0);
                     //$a = 'http://cqranking.com/men/asp/gen/' . ;
