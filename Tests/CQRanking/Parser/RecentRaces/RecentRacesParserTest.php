@@ -19,12 +19,12 @@ class RecentRacesParserTest extends WebTestCase
 
         $this->assertCount(100, $ret);
 
-        $this->assertEquals('23-09-2015', $ret[0]->date->format('d-m-Y'));
+        $this->assertEquals('23-09', $ret[0]->date->format('d-m'));
         $this->assertEquals('1.1', $ret[0]->category);
         $this->assertEquals('Omloop van het Houtland - Lichtervelde', $ret[0]->name);
         $this->assertEquals('race.asp?raceid=28327', $ret[0]->url);
 
-        $this->assertEquals('28-10-2015', $ret[99]->date->format('d-m-Y'));
+        $this->assertEquals('28-10', $ret[99]->date->format('d-m'));
         $this->assertEquals('2.HC', $ret[99]->category);
         $this->assertEquals('Tour of Hainan, General classification', $ret[99]->name);
         $this->assertEquals('race.asp?raceid=28518', $ret[99]->url);
