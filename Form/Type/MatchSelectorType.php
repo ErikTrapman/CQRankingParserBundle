@@ -13,22 +13,23 @@ namespace ErikTrapman\Bundle\CQRankingParserBundle\Form\Type;
 
 use ErikTrapman\Bundle\CQRankingParserBundle\Parser\Crawler\CrawlerManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MatchSelectorType extends AbstractType
 {
-    
+
     /**
      *
      * @var \ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser
      */
     private $matchParser;
-    
+
     public function __construct(\ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser $matchParser)
     {
         $this->matchParser = $matchParser;
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $options = array();
@@ -44,6 +45,6 @@ class MatchSelectorType extends AbstractType
 
     public function getParent()
     {
-        return 'choice';
+        return ChoiceType::class;
     }
 }

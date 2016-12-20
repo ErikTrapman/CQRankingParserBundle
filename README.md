@@ -10,6 +10,12 @@ This bundle parses all the results on the CQranking.com website according to 3 s
 
 Reading results from CQ-ranking made easy!
 
+# 1.0 #
+Use this version for Symfony < 3.x
+
+# master #
+Use this version for Symfony3
+
 ===========================================================
 
 Geef je wielerspel een boost met deze automatische CQ-ranking uitslagen-verwerker.
