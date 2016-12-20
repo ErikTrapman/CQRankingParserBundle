@@ -11,9 +11,10 @@
 
 namespace ErikTrapman\Bundle\CQRankingParserBundle\Form\Type;
 
-use ErikTrapman\Bundle\CQRankingParserBundle\Parser\Crawler\CrawlerManager;
+use ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MatchSelectorType extends AbstractType
@@ -21,26 +22,31 @@ class MatchSelectorType extends AbstractType
 
     /**
      *
-     * @var \ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser
+     * @var MatchParser
      */
     private $matchParser;
 
-    public function __construct(\ErikTrapman\Bundle\CQRankingParserBundle\Parser\Match\MatchParser $matchParser)
+    public function __construct(MatchParser $matchParser)
     {
         $this->matchParser = $matchParser;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $options = array();
         $options['empty_value'] = 'Maak keuze';
-        $options['choices'] = $this->matchParser->getMatches();
+        $options['choices'] = array_flip($this->matchParser->getMatches());
         $resolver->setDefaults($options);
     }
 
     public function getName()
     {
         return 'eriktrapman_cqrankingmatchselector_type';
+    }
+
+    public function getBlockPrefix()
+    {
+        return $this->getName();
     }
 
     public function getParent()

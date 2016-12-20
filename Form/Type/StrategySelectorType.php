@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class StrategySelectorType extends AbstractType
@@ -25,25 +26,29 @@ class StrategySelectorType extends AbstractType
         $builder->addModelTransformer(new \ErikTrapman\Bundle\CQRankingParserBundle\Form\DataTransformer\ConstantToStrategyClassTransformer());
     }
 
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
+
     public function getName()
     {
         return 'eriktrapman_cqparser_strategy';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-                'empty_value' => 'Maak keuze',
-                'choices' => array(
-                    'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2012\OneDay' => 'Eendagskoers 2012',
-                    'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2012\Stage' => 'Etappe 2012',
-                    'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2012\GeneralClassification' => 'Alg. klassement 2012',
-                    'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2013\OneDay' => 'Eendagskoers 2013',
-                    'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2013\Stage' => 'Etappe 2013',
-                    'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2013\GeneralClassification' => 'Alg. klassement 2013',
-                )
-            )
-        );
+            'empty_value' => 'Maak keuze',
+            'choices' => array_flip(array(
+                'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2012\OneDay' => 'Eendagskoers 2012',
+                'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2012\Stage' => 'Etappe 2012',
+                'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2012\GeneralClassification' => 'Alg. klassement 2012',
+                'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2013\OneDay' => 'Eendagskoers 2013',
+                'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2013\Stage' => 'Etappe 2013',
+                'ErikTrapman\Bundle\CQRankingParserBundle\Parser\Strategy\Y2013\GeneralClassification' => 'Alg. klassement 2013',
+            ))
+        ));
     }
 
     public function getParent()
@@ -51,5 +56,3 @@ class StrategySelectorType extends AbstractType
         return ChoiceType::class;
     }
 }
-
-?>
