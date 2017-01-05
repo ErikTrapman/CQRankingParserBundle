@@ -35,7 +35,7 @@ class RecentRacesParser
      * @param null $content
      * @return RecentRaceDataContainer[]
      */
-    public function getRecentRaces($content = null)
+    public function getRecentRaces($content = null, $refDate = null)
     {
         if (null === $content) {
             $content = @file_get_contents('http://cqranking.com/men/asp/gen/RacesRecent.asp?changed=0');
@@ -45,7 +45,10 @@ class RecentRacesParser
         }
         $ret = [];
         $crawler = $this->crawlerManager->getCrawlerForHTMLContent($content);
-        $crawler->filter('table.border tr')->each(function ($node, $i) use (&$ret) {
+        if (null === $refDate) {
+            $refDate = new \DateTime('today, 00:00:00');
+        }
+        $crawler->filter('table.border tr')->each(function ($node, $i) use (&$ret, $refDate) {
             if (0 === $i) {
                 return;
             }
@@ -57,6 +60,10 @@ class RecentRacesParser
                 if (1 == $index) {
                     $row->date = \DateTime::createFromFormat('d/m', trim($td->nodeValue));
                     $row->date->setTime(0, 0, 0);
+                    // we only know the d+m, we assume that if the date is > today, we have a date in the past.
+                    if ($row->date > $refDate) {
+                        $row->date->modify('-1 year');
+                    }
                 }
                 if (3 == $index) {
                     $row->category = trim($td->nodeValue);
